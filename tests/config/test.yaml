@@ -1,3 +1,11 @@
-base_url: 'https://test-api.example.com'
-user: 'test_user'
-pwd: 'test_pass'
+base_url: "http://test01.gateway.fncjob.com:48080/"
+users:
+  admin:
+    username: "admin"
+    password: "admin123"
+  enterprise:
+    username: "testcorp01@fnc.com"
+    password: "Fnc123!"
+  personal:
+    username: "testuser01@fnc.com"
+    password: "Fnc123!"

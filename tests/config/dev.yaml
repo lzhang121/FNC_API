@@ -1,3 +1,11 @@
-base_url: 'https://dev-api.example.com'
-user: 'dev_user'
-pwd: 'dev_pass'
+base_url: "http://test01.gateway.fncjob.com:48080/"
+users:
+  admin:
+    username: "admin"
+    password: "admin123"
+  enterprise:
+    username: "testcorp01@fnc.com"
+    password: "Fnc123!"
+  personal:
+    username: "testuser01@fnc.com"
+    password: "Fnc123!"

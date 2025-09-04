@@ -15,25 +15,30 @@ def config(pytestconfig):
     logger.info(f"加载环境配置: {env}")
     return load_config(env)
 
-@pytest.fixture(scope="session")
-def base_url(config):
-    return config["base_url"]
-
-@pytest.fixture(scope="session")
-def auth_token(base_url, config):
-    payload = {"user": config["user"], "pwd": config["pwd"]}
-    logger.info(f"请求登录接口: {payload}")
-    resp = requests.post(f"{base_url}/login", json=payload)
-    logger.debug(f"响应: {resp.status_code}, {resp.text}")
-    return resp.json()["token"]
+@pytest.fixture
+def auth_token(config, request):
+    role = getattr(request, "param", "admin")
+    username = config["users"][role]["username"]
+    password = config["users"][role]["password"]
+    login_url = f"{config['base_url']}admin-api/auth/auth/login"
+    payload = json.dumps({"username": username, "password": password})
+    headers = {"Content-Type": "application/json"}
+    logger.info(f"登录角色: {role}, 用户名: {username}")
+    resp = requests.post(login_url, headers=headers, data=payload)
+    logger.info(f"响应状态码: {resp.status_code}")
+    logger.debug(f"响应内容: {resp.text}")
+    resp.raise_for_status()
+    return resp.json().get("data", {}).get("token")
 
 @pytest.fixture
-def client(base_url, auth_token, request):
+def client(auth_token, config, request):
     session = requests.Session()
-    session.headers.update({"Authorization": f"Bearer {auth_token}"})
-
+    session.headers.update({
+        "Authorization": f"Bearer {auth_token}",
+        "Content-Type": "application/json"
+    })
     def request_with_log(method, url, **kwargs):
-        full_url = f"{base_url}{url}"
+        full_url = f"{config['base_url']}{url}"
         logger.info(f"请求 {method.upper()} {full_url}")
         if kwargs.get("json"):
             logger.info(f"请求参数: {kwargs['json']}")
@@ -48,7 +53,6 @@ def client(base_url, auth_token, request):
             "response": resp.text
         })
         return resp
-
     session.request = request_with_log
     return session
 
@@ -58,7 +62,7 @@ def pytest_addoption(parser):
         action="store",
         default="test",
         choices=["dev", "test", "prod"],
-        help="运行环境: dev / test / prod (默认 test)"
+        help="运行环境: dev / test / prod"
     )
 
 @pytest.hookimpl(hookwrapper=True)
