@@ -1,0 +1,7 @@
+allure-results/
+.vscode/
+.python_cache/
+__pycache__/
+.idea/
+.env
+.env.*
