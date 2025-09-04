@@ -1,0 +1,3 @@
+base_url: 'https://test-api.example.com'
+user: 'test_user'
+pwd: 'test_pass'

@@ -1,0 +1,13 @@
+get_user:
+  - id: 1
+    expected_name: "Alice"
+  - id: 2
+    expected_name: "Bob"
+
+create_user:
+  - name: "Charlie"
+    email: "charlie@example.com"
+    expected_status: 201
+  - name: "David"
+    email: "david@example.com"
+    expected_status: 201

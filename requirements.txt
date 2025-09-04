@@ -1,4 +1,5 @@
 pytest
-pytest-playwright
+requests
 pytest-html
 allure-pytest
+pyyaml

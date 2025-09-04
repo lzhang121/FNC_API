@@ -1,0 +1,3 @@
+base_url: 'https://dev-api.example.com'
+user: 'dev_user'
+pwd: 'dev_pass'
