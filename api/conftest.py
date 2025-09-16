@@ -1,12 +1,9 @@
 import pytest
 import requests
 import json
-# import os
-# import shutil
-# from pathlib import Path
-from tests.utils.config import load_config
-from tests.utils.logger import get_logger
-from tests.utils.http_client import create_logged_session
+from lib.utils.config import load_config
+from lib.utils.logger import get_logger
+from lib.utils.http_client import create_logged_session
 
 logger = get_logger()
 
@@ -18,14 +15,6 @@ def pytest_addoption(parser):
         choices=["dev", "test", "prod"],
         help="运行环境: dev / test / prod"
     )
-
-# @pytest.hookimpl(tryfirst=True)
-# def pytest_sessionstart(session):
-#     """在 pytest 会话开始时删除旧的 allure-results"""
-#     results_dir = Path(__file__).parent.parent / "allure-results"
-#     if os.path.exists(results_dir):
-#         shutil.rmtree(results_dir)
-#         print(f"✅ 已删除旧的 Allure 测试结果: {results_dir}")
 
 @pytest.fixture(scope="session")
 def config(pytestconfig):

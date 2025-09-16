@@ -1,5 +1,5 @@
 import requests
-from tests.utils.logger import get_logger
+from lib.utils.logger import get_logger
 
 logger = get_logger()
 

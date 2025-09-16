@@ -19,7 +19,7 @@ pip install --upgrade pip
 pip install -r requirements.txt
 
 REM 运行 pytest
-rmdir /s /q "C:\Users\linsh\git\FNC_API\allure-results"
+del /q "C:\Users\linsh\git\FNC_API\allure-results\*.*"
 pytest --env=test --alluredir=.\allure-results
 
 REM 启动 Allure 报告
