@@ -1,11 +1,11 @@
-base_url: "http://test01.gateway.fncjob.com:48080/"
+base_url: "http://test01.fncjob.com:48080/"
 users:
   admin:
     username: "admin"
     password: "admin123"
   enterprise:
-    username: "testcorp01@fnc.com"
+    username: "testcorp@api.com"
     password: "Fnc123!"
   personal:
-    username: "testuser01@fnc.com"
+    username: "testuser@api.com"
     password: "Fnc123!"

@@ -3,9 +3,9 @@ users:
   admin:
     username: "admin"
     password: "admin123"
-  enterprise:
-    username: "testcorp01@fnc.com"
+  corp:
+    username: "testcorp@api.com"
     password: "Fnc123!"
-  personal:
-    username: "testuser01@fnc.com"
+  user:
+    username: "testuser@api.com"
     password: "Fnc123!"
