@@ -1,12 +1,12 @@
 import pytest
 import allure
 
-@pytest.mark.parametrize("auth_token", ["admin","corp"], indirect=True)
-def test_get_gethomenoticelist(client, auth_token, request):
+@pytest.mark.parametrize("client", ["admin","corp"], indirect=True)
+def test_get_gethomenoticelist(client, request):
     resp = client.get("/admin-api/system/notice/getHomeNoticeList")
     allure.attach(
         resp.text,
-        name=f"{request.node.name}_{auth_token}_response",
+        name=f"{request.node.name}_response",
         attachment_type=allure.attachment_type.JSON
     )
     assert resp.status_code == 200

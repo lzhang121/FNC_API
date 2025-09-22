@@ -3,9 +3,9 @@ import allure
 
 # 注意这里的变化：parametrize 的目标是 'client'
 @pytest.mark.parametrize("client", ["user"], indirect=True)
-def test_get_industrylist(client, request): # 不再需要 auth_token fixture
+def test_get_jobapplications(client, request): # 不再需要 auth_token fixture
     # client 已经是带 'user' token 的实例了
-    resp = client.get("/admin-api/job/individual/getIndividualInfo")
+    resp = client.get("/admin-api/job/applications?pageNo=1&pageSize=10")
     
     # allure.attach 的 name 可以更简洁
     allure.attach(

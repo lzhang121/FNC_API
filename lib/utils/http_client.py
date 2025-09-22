@@ -1,39 +1,39 @@
 import requests
 from lib.utils.logger import get_logger
+from urllib.parse import urljoin
 
 logger = get_logger()
 
-def create_logged_session(base_url: str, token: str = None):
-    """
-    创建带日志功能的 requests.Session
-    :param base_url: 基础 URL (例如 http://test01.gateway.fncjob.com:48080/)
-    :param token: 认证 Token，可选
-    :return: 带日志功能的 session
-    """
-    session = requests.Session()
-    if token:
-        session.headers.update({
-            "Authorization": f"Bearer {token}",
-            "Content-Type": "application/json"
-        })
+class ApiClient(requests.Session):
+    def __init__(self, base_url: str, token: str = None):
+        super().__init__()
+        self.base_url = base_url
+        if token:
+            self.headers.update({
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json"
+            })
+        logger.info(f"ApiClient initialized for base_url: {self.base_url}")
 
-    logger.info(f"token: {token} session.header:{session.headers}")
-    # 保存原始 request 方法
-    original_request = session.request
-
-    def request_with_log(method, url, **kwargs):
-        # 拼接 URL，防止双斜杠问题
-        full_url = f"{base_url.rstrip('/')}/{url.lstrip('/')}"
+    def request(self, method, url, **kwargs):
+        # Use urljoin for robust URL construction
+        full_url = urljoin(self.base_url, url)
+        
         logger.info(f"[HTTP] {method.upper()} {full_url}")
         if kwargs.get("json"):
-            logger.info(f"[HTTP] Payload: {kwargs['json']}")
-        logger.info(f"[HTTP] Headers: {session.headers}")
-
-        resp = original_request(method, full_url, **kwargs)
-
-        logger.info(f"[HTTP] Status: {resp.status_code}")
-        logger.info(f"[HTTP] Response: {resp.text}")
-        return resp
-
-    session.request = request_with_log
-    return session
+            logger.debug(f"[HTTP] Payload: {kwargs['json']}")
+        
+        try:
+            response = super().request(method, full_url, **kwargs)
+            response.raise_for_status()  # Raise an exception for bad status codes (4xx or 5xx)
+            
+            logger.info(f"[HTTP] Status: {response.status_code}")
+            # Log response body at a lower level to avoid clutter
+            logger.debug(f"[HTTP] Response: {response.text}")
+            
+            return response
+        except requests.exceptions.RequestException as e:
+            logger.error(f"[HTTP] Request failed: {e}")
+            # You might want to return None or a custom error object
+            # depending on how you want your tests to handle failures.
+            return None

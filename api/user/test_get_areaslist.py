@@ -1,12 +1,12 @@
 import pytest
 import allure
 
-@pytest.mark.parametrize("auth_token", ["user"], indirect=True)
-def test_get_areaslist(client, auth_token, request):
+@pytest.mark.parametrize("client", ["user"], indirect=True)
+def test_get_areaslist(client, request):
     resp = client.get("/admin-api/system/areaManage/getAreasList")
     allure.attach(
         resp.text,
-        name=f"{request.node.name}_{auth_token}_response",
+        name=f"{request.node.name}_response",
         attachment_type=allure.attachment_type.JSON
     )
     assert resp.status_code == 200

@@ -1,12 +1,12 @@
 import pytest
 import allure
 
-@pytest.mark.parametrize("auth_token", ["corp"], indirect=True)
-def test_get_homepagetopright(client, auth_token, request):
+@pytest.mark.parametrize("client", ["corp"], indirect=True)
+def test_get_homepagetopright(client, request):
     resp = client.get("/admin-api/job/enterprise-home/homePageTopRight")
     allure.attach(
         resp.text,
-        name=f"{request.node.name}_{auth_token}_response",
+        name=f"{request.node.name}_response",
         attachment_type=allure.attachment_type.JSON
     )
     assert resp.status_code == 200

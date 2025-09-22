@@ -1,13 +1,9 @@
 import pytest
 import allure
 
-# 注意这里的变化：parametrize 的目标是 'client'
 @pytest.mark.parametrize("client", ["user"], indirect=True)
-def test_get_industrylist(client, request): # 不再需要 auth_token fixture
-    # client 已经是带 'user' token 的实例了
-    resp = client.get("/admin-api/job/individual/getIndividualInfo")
-    
-    # allure.attach 的 name 可以更简洁
+def test_get_dictdatabytype(client, request):
+    resp = client.get("/admin-api/infra/dict-data/getDictDataByType?dictType=personal_end_job_distance")
     allure.attach(
         resp.text,
         name=f"{request.node.name}_response",

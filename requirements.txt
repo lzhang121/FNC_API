@@ -1,5 +1,1 @@
-pytest
-requests
-pytest-html
-allure-pytest
-pyyaml
+pydantic
