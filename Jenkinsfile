@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     parameters {
-        choice(name: 'env', choices: ['test', 'dev', 'prod'], description: 'Select the environment to run the tests against.')
+        choice(name: 'env', choices: ['test01', 'test03', 'prod'], description: 'Select the environment to run the tests against.')
     }
 
     environment {
