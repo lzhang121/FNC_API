@@ -1,4 +1,4 @@
-base_url: "http://test03.gateway.fncjob.com:48080/"
+base_url: "http://test01.gateway.fncjob.com:48080/"
 users:
   admin:
     username: "admin"
