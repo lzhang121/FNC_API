@@ -10,7 +10,7 @@ logger = get_logger()
 def pytest_addoption(parser):
     parser.addoption(
         "--env", action="store", default="test",
-        choices=["dev", "test", "prod"], help="运行环境"
+        choices=["test01", "test03", "prod"], help="运行环境"
     )
 
 @pytest.fixture(scope="session")
