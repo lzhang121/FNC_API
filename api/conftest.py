@@ -9,7 +9,7 @@ logger = get_logger()
 # --- 这部分保持不变 ---
 def pytest_addoption(parser):
     parser.addoption(
-        "--env", action="store", default="test",
+        "--env", action="store", default="test01",
         choices=["test01", "test03", "prod"], help="运行环境"
     )
 
