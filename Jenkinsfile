@@ -1,10 +1,8 @@
 pipeline {
     agent any
 
-    tools {
-        // This requires a Python installation named 'Python3' to be configured
-        // in Jenkins -> Manage Jenkins -> Global Tool Configuration.
-        python 'Python3'
+    parameters {
+        choice(name: 'env', choices: ['test', 'dev', 'prod'], description: 'Select the environment to run the tests against.')
     }
 
     environment {
@@ -30,7 +28,7 @@ pipeline {
             steps {
                 script {
                     // Create a virtual environment
-                    sh "python -m venv ${VENV}"
+                    sh "python3 -m venv ${VENV}"
                     // Activate the virtual environment and install dependencies
                     sh "${VENV}/bin/pip install --upgrade pip"
                     sh "${VENV}/bin/pip install -r requirements.txt"
@@ -44,7 +42,7 @@ pipeline {
                     // Clean old allure results
                     sh 'rm -rf allure-results/*'
                     // Run pytest and generate allure results
-                    sh "${VENV}/bin/pytest --env=test --alluredir=allure-results"
+                    sh "${VENV}/bin/pytest --env=${params.env} --alluredir=allure-results"
                 }
             }
         }
