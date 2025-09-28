@@ -1,6 +1,9 @@
 import pytest
 import allure
 
+@allure.parent_suite("用户端") 
+@allure.suite("job收藏") 
+@allure.feature("job收藏")
 # 注意这里的变化：parametrize 的目标是 'client'
 @pytest.mark.parametrize("client", ["user"], indirect=True)
 def test_get_jobfavorites(client, request): # 不再需要 auth_token fixture

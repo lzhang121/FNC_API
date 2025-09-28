@@ -2,6 +2,9 @@ import pytest
 import allure
 
 # 注意这里的变化：parametrize 的目标是 'client'
+@allure.parent_suite("用户端") 
+@allure.suite("job申请") 
+@allure.feature("job申请")
 @pytest.mark.parametrize("client", ["user"], indirect=True)
 def test_get_jobapplications(client, request): # 不再需要 auth_token fixture
     # client 已经是带 'user' token 的实例了

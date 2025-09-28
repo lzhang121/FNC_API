@@ -1,6 +1,9 @@
 import pytest
 import allure
 
+@allure.parent_suite("企业端") 
+@allure.suite("主业页右上角") 
+@allure.feature("主业页右上角")
 @pytest.mark.parametrize("client", ["corp"], indirect=True)
 def test_get_homepagetopright(client, request):
     resp = client.get("/admin-api/job/enterprise-home/homePageTopRight")
