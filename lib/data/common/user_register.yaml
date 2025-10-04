@@ -1,0 +1,91 @@
+- casename: "認証コードが正しくありません。原因：認証コードが存在しません 。"
+  condition: 0
+  payload:
+    loginName: "test_{{random_str}}@test.com"
+    individualLastName: "测试"
+    individualFirstName: "用户"
+    individualLastNameKana: "テスト"
+    individualFirstNameKana: "ユーザー"
+    birthday: "2005-10-04"
+    sex: 1
+    country: "JP"
+    phone: "070{{random_int}}"
+    verificationCode: "999999"
+    password: "Fnc123!"
+    confirmPassword: "Fnc123!"
+  validate:
+    code: 1004005001
+    msg: "認証コードが正しくありません。原因：認証コードが存在しません 。"
+- casename: "個人ユーザーの登録に成功しました。"
+  condition: 1
+  payload:
+    loginName: "test_{{random_str}}@test.com"
+    individualLastName: "测试"
+    individualFirstName: "用户"
+    individualLastNameKana: "テスト"
+    individualFirstNameKana: "ユーザー"
+    birthday: "2005-10-04"
+    sex: 1
+    country: "JP"
+    phone: "070{{random_int}}"
+    verificationCode: "999999"
+    password: "Fnc123!"
+    confirmPassword: "Fnc123!"
+  validate:
+    code: 0
+    msg: "個人ユーザーの登録に成功しました。"
+- casename: "性別は [1, 2] でなければなりません。"
+  condition: 1
+  payload:
+    loginName: "test_{{random_str}}@test.com"
+    individualLastName: "测试"
+    individualFirstName: "用户"
+    individualLastNameKana: "テスト"
+    individualFirstNameKana: "ユーザー"
+    birthday: "2005-10-04"
+    sex: 0
+    country: "JP"
+    phone: "070{{random_int}}"
+    verificationCode: "999999"
+    password: "Fnc123!"
+    confirmPassword: "Fnc456@" # 不一致的密码
+  validate:
+    code: 400 # 假设业务错误码为500
+    # 实际的message需要根据接口返回来确定，这里先写一个预期的
+    msg: "性別は [1, 2] でなければなりません。"
+- casename: "ユーザーアカウントはすでに存在します。"
+  condition: 1
+  payload:
+    loginName: "testuser7@ui.com"
+    individualLastName: "测试"
+    individualFirstName: "用户"
+    individualLastNameKana: "テスト"
+    individualFirstNameKana: "ユーザー"
+    birthday: "2005-10-04"
+    sex: 1
+    country: "JP"
+    phone: "070{{random_int}}"
+    verificationCode: "999999"
+    password: "Fnc123!"
+    confirmPassword: "Fnc123!"
+  validate:
+    code: 1004005000 # 假设业务错误码为500
+    msg: "ユーザーアカウントはすでに存在します。" # 假设的错误信息
+- casename: "ユーザーアカウントはすでに存在します。"
+  condition: 1
+  payload:
+    loginName: "test_{{random_str}}@test.com" # 缺少loginName
+    individualLastName: "测试"
+    individualFirstName: "用户"
+    individualLastNameKana: "テスト"
+    individualFirstNameKana: "ユーザー"
+    birthday: "2005-10-04"
+    sex: 2
+    country: "JP"
+    phone: "070"
+    verificationCode: "999999"
+    password: "Fnc123!"
+    confirmPassword: "Fnc123!"
+  validate:
+    code: 400 # 假设业务错误码为500電話番号の形式が正しくありません。
+    msg: "電話番号の形式が正しくありません。" # 假设的错误信息
